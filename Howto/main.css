@@ -1,0 +1,57 @@
+/* type selectors */
+article, aside, figure, figcaption, footer, header, nav, section {
+    display: block;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 87.5%;
+	width: 650px;
+	margin: 0 auto;
+	border: 3px solid rgb(246,42,0);
+	background-color: rgb(241,243,206)
+	
+}
+section {
+	padding: 40px 100px;
+	background-color: rgb(0,41,60);
+}
+#faqs h1 { 
+	position: relative;
+	left: -175px;
+	font-size: 75%;
+	opacity: .2;
+	color: rgb(242,133,0);
+}
+h2 {
+	font-size: 120%;
+	padding: .25em 0 .25em 25px;
+	cursor: pointer;
+	color: rgb(242,133,0);
+	background: url(images/plus.png) no-repeat left center;
+}
+h2.minus {
+	background: url(images/minus.png) no-repeat left center;
+}
+div {
+	display: none;
+}
+div.open {
+	display: block;
+}
+ul {
+	padding-left: 45px;
+	color: rgb(242,133,0);
+}
+li {
+	padding-bottom: .25em;
+	color: rgb(242,133,0);
+}
+p {
+	padding-bottom: .25em;
+	padding-left: 25px;
+	color: rgb(242,133,0)
+}

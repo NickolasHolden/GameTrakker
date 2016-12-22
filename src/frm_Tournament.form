@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jPanel1" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btn_Var" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="283" max="-2" attributes="0"/>
+                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="254" max="-2" attributes="0"/>
+                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="241" max="32767" attributes="0"/>
+                      <Component id="btn_Var" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jSeparator6" min="-2" pref="19" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator6" min="-2" pref="10" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JSeparator" name="jSeparator6">
+          <Properties>
+            <Property name="orientation" type="int" value="1"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JPanel" name="jPanel3">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="288" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lbl_Tournaments_bracket3_player4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txt_Tournaments_bracket3_score3" min="-2" pref="35" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lbl_Tournaments_bracket3_player3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txt_Tournaments_bracket3_score4" min="-2" pref="35" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="78" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="txt_Tournaments_bracket2_score6" min="-2" pref="41" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lbl_Tournaments_bracket2_player7" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="txt_Tournaments_bracket2_score7" min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lbl_Tournaments_bracket2_player6" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="txt_Tournaments_bracket2_score8" min="-2" pref="35" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lbl_Tournaments_bracket2_player8" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="txt_Tournaments_bracket2_score5" min="-2" pref="41" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lbl_Tournaments_bracket2_player5" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
+                              <Component id="lbl_Tournaments_bracket4_player2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_bracket4_score2" min="-2" pref="35" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txt_Tournaments_player4Score1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tournaments_player2Score1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tournaments_player3Score1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tournaments_player5Score1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tournaments_player6Score1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tournaments_player7Score1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tournaments_player8Score1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tournaments_player1Score1" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txt_Tounament_player16" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tounament_player11" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tounament_player12" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tounament_player13" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tounament_player15" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tounament_player9" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tounament_player10" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_Tounament_player14" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txt_Tournaments_player3Score1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_player4Score1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_player5Score1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player6Score1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player7Score1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player8Score1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_Tournaments_bracket3_player4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_Tournaments_bracket3_score3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="txt_Tournaments_bracket4_score2" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_Tournaments_bracket4_player2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_Tournaments_bracket3_player3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_Tournaments_bracket3_score4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="txt_Tournaments_player1Score1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_Tournaments_player2Score1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="txt_Tounament_player14" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_Tounament_player13" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                                              <Component id="txt_Tounament_player10" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="txt_Tounament_player12" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txt_Tounament_player11" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txt_Tounament_player9" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="txt_Tounament_player16" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_Tounament_player15" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="59" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txt_Tournaments_bracket2_score5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_Tournaments_bracket2_player5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lbl_Tournaments_bracket2_player7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txt_Tournaments_bracket2_score6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txt_Tournaments_bracket2_score7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_Tournaments_bracket2_player6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txt_Tournaments_bracket2_score8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl_Tournaments_bracket2_player8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player7">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Player"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player8">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Player"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket3_player3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Player"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket3_player4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Player"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player9">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player10">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player11">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player12">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player13">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player14">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player15">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player1Score1">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player2Score1">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player3Score1">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_Tournaments_player3Score1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player4Score1">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player5Score1">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player6Score1">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player7Score1">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_player8Score1">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tounament_player16">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket4_player2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Player"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score5">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score6">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score7">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score8">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket4_score2">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket3_score3">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket3_score4">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Player"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player6">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Player"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel2">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txt_Tounament_player7" max="32767" attributes="0"/>
+                              <Component id="txt_Tounament_player4" max="32767" attributes="0"/>
+                              <Component id="txt_Tounament_player3" max="32767" attributes="0"/>
+                              <Component id="txt_Tounament_player2" max="32767" attributes="0"/>
+                              <Component id="txt_Tounament_player8" max="32767" attributes="0"/>
+                              <Component id="txt_Tounament_player6" max="32767" attributes="0"/>
+                              <Component id="txt_Tounament_player5" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txt_Tournaments_player4Score" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_Tournaments_player2Score" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_Tournaments_player3Score" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_Tournaments_player5Score" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_Tournaments_player6Score" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_Tournaments_player7Score" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_Tournaments_player8Score" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="txt_Tounament_player1" min="-2" pref="85" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txt_Tournaments_player1Score" min="-2" pref="35" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lbl_Tournaments_bracket2_player1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txt_Tournaments_bracket2_score1" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lbl_Tournaments_bracket2_player2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txt_Tournaments_bracket2_score2" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lbl_Tournaments_bracket2_player4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txt_Tournaments_bracket2_score4" min="-2" pref="35" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lbl_Tournaments_bracket3_player2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txt_Tournaments_bracket3_score2" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lbl_Tournaments_bracket3_player1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txt_Tournaments_bracket3_score1" min="-2" pref="35" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbl_Tournaments_bracket2_player3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txt_Tournaments_bracket2_score3" min="-2" pref="35" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="108" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lbl_Tournaments_bracket4_player1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="txt_Tournaments_bracket4_score1" min="-2" pref="35" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lbl_Tournaments_bracket2_player1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_bracket2_score1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl_Tournaments_bracket2_player2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_bracket2_score2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl_Tournaments_bracket2_player3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_bracket2_score3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl_Tournaments_bracket2_player4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_bracket2_score4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl_Tournaments_bracket3_player1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_bracket3_score1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl_Tournaments_bracket4_player1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_bracket4_score1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lbl_Tournaments_bracket3_player2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_bracket3_score2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="txt_Tounament_player1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player1Score" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txt_Tounament_player2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player2Score" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txt_Tounament_player5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_player5Score" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txt_Tounament_player3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_player3Score" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txt_Tounament_player4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_Tournaments_player4Score" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txt_Tounament_player6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player6Score" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txt_Tounament_player7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player7Score" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txt_Tounament_player8" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_Tournaments_player8Score" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player6">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player5">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player4">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player3">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket4_player1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Player"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player2">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player8">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player2Score">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player3Score">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_Tournaments_player3ScoreActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player4Score">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player5Score">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player6Score">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player7Score">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player8Score">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score1">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score2">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score3">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket2_score4">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket4_score1">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket3_score1">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_bracket3_score2">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Player"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Player"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Player"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player7">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket2_player4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Player"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket3_player2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Player"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_Tournaments_bracket3_player1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Player"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tournaments_player1Score">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_Tounament_player1">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="btn_Var">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="2nd Bracket"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_VarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="3rd Bracket"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Final Game"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1st Bracket"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

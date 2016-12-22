@@ -1,0 +1,1607 @@
+
+import java.sql.*;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author robwo
+ */
+public class frm_BowlingScoreCard extends javax.swing.JFrame {
+
+    public void calcScoreForFrame(javax.swing.JPanel frame, javax.swing.JPanel nextFrame, javax.swing.JPanel frameAfterThat) { //frame 1's score calculation function
+        try {
+            int score = 0;
+            String roll1 = ((javax.swing.JTextField) frame.getComponent(0)).getText();
+            String roll2 = ((javax.swing.JTextField) frame.getComponent(1)).getText();
+            String roll3; //just declare, initialize later
+            if(roll1.equals("X")) {
+                score = 10;
+                roll2 = ((javax.swing.JTextField) nextFrame.getComponent(0)).getText();
+                if(roll2.equals("X")) {
+                    score += 10;
+                    roll3 = ((javax.swing.JTextField) frameAfterThat.getComponent(0)).getText();
+                    score += Integer.parseInt(roll3);
+                } else {
+                    roll3 = ((javax.swing.JTextField) nextFrame.getComponent(1)).getText();
+                    if(roll3.equals("/")) {
+                        score += 10;
+                    } else {
+                        score += Integer.parseInt(roll2) + Integer.parseInt(roll3);
+                    }
+                }
+            } else if(roll2.equals("/")) {
+                score += 10;
+                roll3 = ((javax.swing.JTextField) nextFrame.getComponent(0)).getText();
+                score += Integer.parseInt(roll3);
+            } else {
+                score = Integer.parseInt(roll1) + Integer.parseInt(roll2);
+            }
+            ((javax.swing.JLabel) frame.getComponent(2)).setText(score + "");
+        } catch(Exception e) {
+        }
+    }
+
+    public void calcScoreForFrame(javax.swing.JPanel frame, javax.swing.JPanel nextFrame, javax.swing.JPanel frameAfterThat, javax.swing.JPanel previousFrame) { //frame 2-8's score calculation function
+        try {
+            int score = 0;
+            int previousScore = Integer.parseInt(((javax.swing.JLabel) previousFrame.getComponent(2)).getText());
+            String roll1 = ((javax.swing.JTextField) frame.getComponent(0)).getText();
+            String roll2 = ((javax.swing.JTextField) frame.getComponent(1)).getText();
+            String roll3; //just declare, initialize later
+            if(roll1.equals("X")) {
+                score = 10;
+                roll2 = ((javax.swing.JTextField) nextFrame.getComponent(0)).getText();
+                if(roll2.equals("X")) {
+                    score += 10;
+                    roll3 = ((javax.swing.JTextField) frameAfterThat.getComponent(0)).getText();
+                    score += Integer.parseInt(roll3);
+                } else {
+                    roll3 = ((javax.swing.JTextField) nextFrame.getComponent(1)).getText();
+                    if(roll3.equals("/")) {
+                        score += 10;
+                    } else {
+                        score += Integer.parseInt(roll2) + Integer.parseInt(roll3);
+                    }
+                }
+            } else if(roll2.equals("/")) {
+                score += 10;
+                roll3 = ((javax.swing.JTextField) nextFrame.getComponent(0)).getText();
+                score += Integer.parseInt(roll3);
+            } else {
+                score = Integer.parseInt(roll1) + Integer.parseInt(roll2);
+            }
+            ((javax.swing.JLabel) frame.getComponent(2)).setText((previousScore + score) + "");
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static int playerId;
+
+
+
+    /**
+     * Creates new form frm_BowlingScoreCard
+     * @param playerId - the playerId used to get player information from
+     * the database tables
+     */
+    public frm_BowlingScoreCard(int playerId) {
+        initComponents();
+        this.playerId = playerId;
+        // Disable the textboxes
+        txt_frame1_ball2_Scorecard.setEnabled(false);
+        txt_frame2_ball1_Scorecard.setEnabled(false);
+        txt_frame2_ball2_Scorecard.setEnabled(false);
+        txt_frame3_ball1_Scorecard.setEnabled(false);
+        txt_frame3_ball2_Scorecard.setEnabled(false);
+        txt_frame4_ball1_Scorecard.setEnabled(false);
+        txt_frame4_ball2_Scorecard.setEnabled(false);
+        txt_frame5_ball1_Scorecard.setEnabled(false);
+        txt_frame5_ball2_Scorecard.setEnabled(false);
+        txt_frame6_ball1_Scorecard.setEnabled(false);
+        txt_frame6_ball2_Scorecard.setEnabled(false);
+        txt_frame7_ball1_Scorecard.setEnabled(false);
+        txt_frame7_ball2_Scorecard.setEnabled(false);
+        txt_frame8_ball1_Scorecard.setEnabled(false);
+        txt_frame8_ball2_Scorecard.setEnabled(false);
+        txt_frame9_ball1_Scorecard.setEnabled(false);
+        txt_frame9_ball2_Scorecard.setEnabled(false);
+        txt_frame10_ball1_Scorecard.setEnabled(false);
+        txt_frame10_ball2_Scorecard.setEnabled(false);
+        txt_frame10_ball3_Scorecard.setEnabled(false);
+        // Remove text from the textboxes
+        txt_frame1_ball1_Scorecard.setText("");
+        txt_frame1_ball2_Scorecard.setText("");
+        txt_frame2_ball1_Scorecard.setText("");
+        txt_frame2_ball2_Scorecard.setText("");
+        txt_frame3_ball1_Scorecard.setText("");
+        txt_frame3_ball2_Scorecard.setText("");
+        txt_frame4_ball1_Scorecard.setText("");
+        txt_frame4_ball2_Scorecard.setText("");
+        txt_frame5_ball1_Scorecard.setText("");
+        txt_frame5_ball2_Scorecard.setText("");
+        txt_frame6_ball1_Scorecard.setText("");
+        txt_frame6_ball2_Scorecard.setText("");
+        txt_frame7_ball1_Scorecard.setText("");
+        txt_frame7_ball2_Scorecard.setText("");
+        txt_frame8_ball1_Scorecard.setText("");
+        txt_frame8_ball2_Scorecard.setText("");
+        txt_frame9_ball1_Scorecard.setText("");
+        txt_frame9_ball2_Scorecard.setText("");
+        txt_frame10_ball1_Scorecard.setText("");
+        txt_frame10_ball2_Scorecard.setText("");
+        txt_frame10_ball3_Scorecard.setText("");
+
+        // Connect to the database and display user's name
+        try{
+            // Connect to the database
+            DBConnect con = new DBConnect();
+            // SQL query statement
+            ResultSet rs = con.getStatement().executeQuery("SELECT * FROM " +
+                    "PlayerInfo WHERE [PlayerId] = " + playerId);
+
+            // Display user's full name
+            while(rs.next()){
+                lbl_playerName_Scorecard.setText(rs.getString(2) + " " +
+                        rs.getString(3));
+            }
+        }catch(Exception e){ // Print error is there is a problem with database
+            System.out.println("Error: " + e);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jPanel2 = new javax.swing.JPanel();
+        lbl_score_Scorecard = new javax.swing.JLabel();
+        lbl_strikes_Scorecard = new javax.swing.JLabel();
+        lbl_spares_Scorecard = new javax.swing.JLabel();
+        lbl_Score = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lbl_playerName_Scorecard = new javax.swing.JLabel();
+        pnl_ScoreCard = new javax.swing.JPanel();
+        pnl_frame1_Scorecard = new javax.swing.JPanel();
+        txt_frame1_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame1_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame1_Score = new javax.swing.JLabel();
+        pnl_frame2_Scorecard = new javax.swing.JPanel();
+        txt_frame2_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame2_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame2_Score = new javax.swing.JLabel();
+        pnl_frame3_Scorecard = new javax.swing.JPanel();
+        txt_frame3_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame3_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame3_Score = new javax.swing.JLabel();
+        pnl_frame4_Scorecard = new javax.swing.JPanel();
+        txt_frame4_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame4_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame4_Score = new javax.swing.JLabel();
+        pnl_frame5_Scorecard = new javax.swing.JPanel();
+        txt_frame5_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame5_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame5_Score = new javax.swing.JLabel();
+        pnl_frame6_Scorecard = new javax.swing.JPanel();
+        txt_frame6_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame6_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame6_Score = new javax.swing.JLabel();
+        pnl_frame7_Scorecard = new javax.swing.JPanel();
+        txt_frame7_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame7_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame7_Score = new javax.swing.JLabel();
+        pnl_frame8_Scorecard = new javax.swing.JPanel();
+        txt_frame8_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame8_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame8_Score = new javax.swing.JLabel();
+        pnl_frame9_Scorecard = new javax.swing.JPanel();
+        txt_frame9_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame9_ball2_Scorecard = new javax.swing.JTextField();
+        lbl_Frame9_Score = new javax.swing.JLabel();
+        pnl_frame10_Scorecard = new javax.swing.JPanel();
+        txt_frame10_ball1_Scorecard = new javax.swing.JTextField();
+        txt_frame10_ball2_Scorecard = new javax.swing.JTextField();
+        txt_frame10_ball3_Scorecard = new javax.swing.JTextField();
+        lbl_Frame10_Score = new javax.swing.JLabel();
+        txt_hdcScorecard = new javax.swing.JLabel();
+        lbl_frame1 = new javax.swing.JLabel();
+        lbl_frame2 = new javax.swing.JLabel();
+        lbl_Frame3 = new javax.swing.JLabel();
+        lbl_frame4 = new javax.swing.JLabel();
+        lbl_frame5 = new javax.swing.JLabel();
+        lbl_frame6 = new javax.swing.JLabel();
+        lbl_frame7 = new javax.swing.JLabel();
+        lbl_frame8 = new javax.swing.JLabel();
+        lbl_frame9 = new javax.swing.JLabel();
+        lbl_frame10 = new javax.swing.JLabel();
+        btn_ScoreCard_Frame1_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame1_Spare = new javax.swing.JButton();
+        btn_ScoreCard_Frame2_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame2_Spare = new javax.swing.JButton();
+        btn_ScoreCard_Frame3_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame3_Spare = new javax.swing.JButton();
+        btn_ScoreCard_Frame4_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame4_Spare = new javax.swing.JButton();
+        btn_ScoreCard_Frame5_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame5_Spare = new javax.swing.JButton();
+        btn_ScoreCard_Frame6_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame6_Spare = new javax.swing.JButton();
+        btn_ScoreCard_Frame7_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame7_Spare = new javax.swing.JButton();
+        btn_ScoreCard_Frame8_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame8_Spare16 = new javax.swing.JButton();
+        btn_ScoreCard_Frame9_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame9_Spare8 = new javax.swing.JButton();
+        btn_ScoreCard_Frame10_Strike = new javax.swing.JButton();
+        btn_ScoreCard_Frame10_Spare = new javax.swing.JButton();
+        menu_Main = new javax.swing.JMenuBar();
+        menu_main_File = new javax.swing.JMenu();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        menu_Exit = new javax.swing.JMenuItem();
+        menu_main_Player = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        menu_main_Help = new javax.swing.JMenu();
+        menu_About = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
+
+        lbl_score_Scorecard.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
+        lbl_score_Scorecard.setText("Score = ");
+        lbl_score_Scorecard.setPreferredSize(new java.awt.Dimension(54, 16));
+
+        lbl_strikes_Scorecard.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
+        lbl_strikes_Scorecard.setText("Strikes = ");
+
+        lbl_spares_Scorecard.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
+        lbl_spares_Scorecard.setText("Spares = ");
+
+        lbl_Score.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
+        lbl_Score.setText("jLabel4");
+
+        jLabel5.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
+        jLabel5.setText("jLabel5");
+
+        jLabel6.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
+        jLabel6.setText("jLabel6");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_spares_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_strikes_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_score_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_Score, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_score_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbl_Score, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_strikes_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_spares_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Bowling ScoreCard");
+        setResizable(false);
+
+        lbl_playerName_Scorecard.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_playerName_Scorecard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_playerName_Scorecard.setText("PlayerName");
+
+        pnl_ScoreCard.setBackground(new java.awt.Color(0, 41, 60));
+        pnl_ScoreCard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0)));
+        pnl_ScoreCard.setForeground(new java.awt.Color(241, 243, 206));
+
+        pnl_frame1_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame1_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame1_ball1_Scorecard.setText("Ball1");
+        txt_frame1_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame1_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame1_ball2_Scorecard.setText("Ball2");
+        txt_frame1_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame1_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame1_Score.setText("SCORE");
+
+        javax.swing.GroupLayout pnl_frame1_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame1_Scorecard);
+        pnl_frame1_Scorecard.setLayout(pnl_frame1_ScorecardLayout);
+        pnl_frame1_ScorecardLayout.setHorizontalGroup(
+            pnl_frame1_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame1_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame1_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_frame1_ScorecardLayout.createSequentialGroup()
+                        .addGap(0, 30, Short.MAX_VALUE)
+                        .addComponent(txt_frame1_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_frame1_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_Frame1_Score, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnl_frame1_ScorecardLayout.setVerticalGroup(
+            pnl_frame1_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame1_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame1_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame1_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame1_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(lbl_Frame1_Score, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pnl_frame2_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame2_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame2_ball1_Scorecard.setText("jTextField1");
+        txt_frame2_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame2_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame2_ball2_Scorecard.setText("jTextField2");
+        txt_frame2_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame2_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame2_Score.setText("jLabel1");
+
+        javax.swing.GroupLayout pnl_frame2_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame2_Scorecard);
+        pnl_frame2_Scorecard.setLayout(pnl_frame2_ScorecardLayout);
+        pnl_frame2_ScorecardLayout.setHorizontalGroup(
+            pnl_frame2_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_frame2_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addComponent(txt_frame2_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_frame2_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame2_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame2_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame2_ScorecardLayout.setVerticalGroup(
+            pnl_frame2_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame2_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame2_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame2_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame2_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame2_Score)
+                .addGap(20, 20, 20))
+        );
+
+        pnl_frame3_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame3_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame3_ball1_Scorecard.setText("jTextField1");
+        txt_frame3_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame3_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame3_ball2_Scorecard.setText("jTextField2");
+        txt_frame3_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame3_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame3_Score.setText("jLabel2");
+
+        javax.swing.GroupLayout pnl_frame3_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame3_Scorecard);
+        pnl_frame3_Scorecard.setLayout(pnl_frame3_ScorecardLayout);
+        pnl_frame3_ScorecardLayout.setHorizontalGroup(
+            pnl_frame3_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_frame3_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(txt_frame3_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_frame3_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame3_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame3_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame3_ScorecardLayout.setVerticalGroup(
+            pnl_frame3_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame3_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame3_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame3_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame3_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame3_Score)
+                .addGap(20, 20, 20))
+        );
+
+        pnl_frame4_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame4_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame4_ball1_Scorecard.setText("jTextField1");
+        txt_frame4_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame4_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame4_ball2_Scorecard.setText("jTextField2");
+        txt_frame4_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame4_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame4_Score.setText("jLabel1");
+
+        javax.swing.GroupLayout pnl_frame4_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame4_Scorecard);
+        pnl_frame4_Scorecard.setLayout(pnl_frame4_ScorecardLayout);
+        pnl_frame4_ScorecardLayout.setHorizontalGroup(
+            pnl_frame4_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame4_ScorecardLayout.createSequentialGroup()
+                .addGroup(pnl_frame4_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_frame4_ScorecardLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(txt_frame4_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_frame4_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_frame4_ScorecardLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbl_Frame4_Score)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame4_ScorecardLayout.setVerticalGroup(
+            pnl_frame4_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame4_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame4_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame4_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame4_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame4_Score)
+                .addGap(24, 24, 24))
+        );
+
+        pnl_frame5_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame5_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame5_ball1_Scorecard.setText("jTextField1");
+        txt_frame5_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame5_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame5_ball2_Scorecard.setText("jTextField2");
+        txt_frame5_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame5_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame5_Score.setText("jLabel2");
+
+        javax.swing.GroupLayout pnl_frame5_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame5_Scorecard);
+        pnl_frame5_Scorecard.setLayout(pnl_frame5_ScorecardLayout);
+        pnl_frame5_ScorecardLayout.setHorizontalGroup(
+            pnl_frame5_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_frame5_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(txt_frame5_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_frame5_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame5_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame5_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame5_ScorecardLayout.setVerticalGroup(
+            pnl_frame5_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame5_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame5_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame5_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame5_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame5_Score)
+                .addGap(22, 22, 22))
+        );
+
+        pnl_frame6_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame6_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pnl_frame6_Scorecard.setPreferredSize(new java.awt.Dimension(112, 76));
+
+        txt_frame6_ball1_Scorecard.setText("jTextField1");
+        txt_frame6_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame6_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame6_ball2_Scorecard.setText("jTextField2");
+        txt_frame6_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame6_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame6_Score.setText("jLabel3");
+
+        javax.swing.GroupLayout pnl_frame6_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame6_Scorecard);
+        pnl_frame6_Scorecard.setLayout(pnl_frame6_ScorecardLayout);
+        pnl_frame6_ScorecardLayout.setHorizontalGroup(
+            pnl_frame6_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_frame6_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(txt_frame6_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(txt_frame6_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame6_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame6_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame6_ScorecardLayout.setVerticalGroup(
+            pnl_frame6_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame6_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame6_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame6_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame6_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame6_Score)
+                .addGap(22, 22, 22))
+        );
+
+        pnl_frame7_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame7_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame7_ball1_Scorecard.setText("jTextField1");
+        txt_frame7_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame7_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame7_ball2_Scorecard.setText("jTextField2");
+        txt_frame7_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame7_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame7_Score.setText("jLabel4");
+
+        javax.swing.GroupLayout pnl_frame7_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame7_Scorecard);
+        pnl_frame7_Scorecard.setLayout(pnl_frame7_ScorecardLayout);
+        pnl_frame7_ScorecardLayout.setHorizontalGroup(
+            pnl_frame7_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame7_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(txt_frame7_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_frame7_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame7_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame7_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame7_ScorecardLayout.setVerticalGroup(
+            pnl_frame7_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame7_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame7_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame7_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame7_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame7_Score)
+                .addGap(21, 21, 21))
+        );
+
+        pnl_frame8_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame8_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame8_ball1_Scorecard.setText("jTextField1");
+        txt_frame8_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame8_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame8_ball2_Scorecard.setText("jTextField2");
+        txt_frame8_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame8_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame8_Score.setText("jLabel7");
+
+        javax.swing.GroupLayout pnl_frame8_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame8_Scorecard);
+        pnl_frame8_Scorecard.setLayout(pnl_frame8_ScorecardLayout);
+        pnl_frame8_ScorecardLayout.setHorizontalGroup(
+            pnl_frame8_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_frame8_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(txt_frame8_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_frame8_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame8_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame8_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame8_ScorecardLayout.setVerticalGroup(
+            pnl_frame8_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame8_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame8_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame8_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame8_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame8_Score)
+                .addGap(20, 20, 20))
+        );
+
+        pnl_frame9_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame9_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame9_ball1_Scorecard.setText("jTextField1");
+        txt_frame9_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame9_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame9_ball2_Scorecard.setText("jTextField2");
+        txt_frame9_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame9_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame9_Score.setText("jLabel8");
+
+        javax.swing.GroupLayout pnl_frame9_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame9_Scorecard);
+        pnl_frame9_Scorecard.setLayout(pnl_frame9_ScorecardLayout);
+        pnl_frame9_ScorecardLayout.setHorizontalGroup(
+            pnl_frame9_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame9_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(txt_frame9_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_frame9_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame9_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame9_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame9_ScorecardLayout.setVerticalGroup(
+            pnl_frame9_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame9_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame9_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame9_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame9_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame9_Score)
+                .addGap(21, 21, 21))
+        );
+
+        pnl_frame10_Scorecard.setBackground(new java.awt.Color(242, 133, 0));
+        pnl_frame10_Scorecard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txt_frame10_ball1_Scorecard.setText("jTextField1");
+        txt_frame10_ball1_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame10_ball1_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame10_ball2_Scorecard.setText("jTextField2");
+        txt_frame10_ball2_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame10_ball2_ScorecardActionPerformed(evt);
+            }
+        });
+
+        txt_frame10_ball3_Scorecard.setText("jTextField3");
+        txt_frame10_ball3_Scorecard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_frame10_ball3_ScorecardActionPerformed(evt);
+            }
+        });
+
+        lbl_Frame10_Score.setText("jLabel9");
+
+        javax.swing.GroupLayout pnl_frame10_ScorecardLayout = new javax.swing.GroupLayout(pnl_frame10_Scorecard);
+        pnl_frame10_Scorecard.setLayout(pnl_frame10_ScorecardLayout);
+        pnl_frame10_ScorecardLayout.setHorizontalGroup(
+            pnl_frame10_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame10_ScorecardLayout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(txt_frame10_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_frame10_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_frame10_ball3_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(pnl_frame10_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_Frame10_Score)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_frame10_ScorecardLayout.setVerticalGroup(
+            pnl_frame10_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_frame10_ScorecardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_frame10_ScorecardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_frame10_ball1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame10_ball3_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_frame10_ball2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_Frame10_Score)
+                .addGap(22, 22, 22))
+        );
+
+        txt_hdcScorecard.setForeground(new java.awt.Color(241, 243, 206));
+        txt_hdcScorecard.setText("HDC:");
+
+        lbl_frame1.setBackground(new java.awt.Color(241, 243, 206));
+        lbl_frame1.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame1.setText("Frame 1");
+
+        lbl_frame2.setBackground(new java.awt.Color(241, 243, 206));
+        lbl_frame2.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame2.setText("Frame 2");
+
+        lbl_Frame3.setBackground(new java.awt.Color(241, 243, 206));
+        lbl_Frame3.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_Frame3.setText("Frame 3");
+
+        lbl_frame4.setBackground(new java.awt.Color(241, 243, 206));
+        lbl_frame4.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame4.setText("Frame 4");
+
+        lbl_frame5.setBackground(new java.awt.Color(241, 243, 206));
+        lbl_frame5.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame5.setText("Frame 5");
+
+        lbl_frame6.setBackground(new java.awt.Color(241, 243, 206));
+        lbl_frame6.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame6.setText("Frame 6");
+
+        lbl_frame7.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame7.setText("Frame 7");
+
+        lbl_frame8.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame8.setText("Frame 8");
+
+        lbl_frame9.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame9.setText("Frame 9");
+
+        lbl_frame10.setForeground(new java.awt.Color(241, 243, 206));
+        lbl_frame10.setText("Frame 10");
+
+        btn_ScoreCard_Frame1_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame1_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame1_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame1_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame1_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame1_Spare.setText("Spare");
+
+        btn_ScoreCard_Frame2_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame2_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame2_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame2_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame2_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame2_Spare.setText("Spare");
+
+        btn_ScoreCard_Frame3_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame3_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame3_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame3_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame3_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame3_Spare.setText("Spare");
+
+        btn_ScoreCard_Frame4_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame4_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame4_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame4_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame4_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame4_Spare.setText("Spare");
+
+        btn_ScoreCard_Frame5_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame5_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame5_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame5_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame5_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame5_Spare.setText("Spare");
+
+        btn_ScoreCard_Frame6_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame6_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame6_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame6_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame6_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame6_Spare.setText("Spare");
+
+        btn_ScoreCard_Frame7_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame7_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame7_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame7_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame7_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame7_Spare.setText("Spare");
+
+        btn_ScoreCard_Frame8_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame8_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame8_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame8_Spare16.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame8_Spare16.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame8_Spare16.setText("Spare");
+
+        btn_ScoreCard_Frame9_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame9_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame9_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame9_Spare8.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame9_Spare8.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame9_Spare8.setText("Spare");
+
+        btn_ScoreCard_Frame10_Strike.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame10_Strike.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame10_Strike.setText("Strike");
+
+        btn_ScoreCard_Frame10_Spare.setBackground(new java.awt.Color(246, 42, 0));
+        btn_ScoreCard_Frame10_Spare.setForeground(new java.awt.Color(241, 243, 206));
+        btn_ScoreCard_Frame10_Spare.setText("Spare");
+
+        javax.swing.GroupLayout pnl_ScoreCardLayout = new javax.swing.GroupLayout(pnl_ScoreCard);
+        pnl_ScoreCard.setLayout(pnl_ScoreCardLayout);
+        pnl_ScoreCardLayout.setHorizontalGroup(
+            pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(txt_hdcScorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pnl_frame1_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame2_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame3_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame4_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84)
+                .addComponent(pnl_frame5_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame6_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame7_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame8_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame9_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_frame10_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(lbl_frame1)
+                        .addGap(69, 69, 69)
+                        .addComponent(lbl_frame2)
+                        .addGap(70, 70, 70)
+                        .addComponent(lbl_Frame3)
+                        .addGap(78, 78, 78)
+                        .addComponent(lbl_frame4)
+                        .addGap(66, 66, 66)
+                        .addComponent(lbl_frame5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_frame6)
+                        .addGap(74, 74, 74)
+                        .addComponent(lbl_frame7)
+                        .addGap(72, 72, 72)
+                        .addComponent(lbl_frame8)
+                        .addGap(73, 73, 73)
+                        .addComponent(lbl_frame9)
+                        .addGap(94, 94, 94)
+                        .addComponent(lbl_frame10))
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addGap(128, 128, 128)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame1_Strike)
+                            .addComponent(btn_ScoreCard_Frame1_Spare))
+                        .addGap(52, 52, 52)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame2_Strike)
+                            .addComponent(btn_ScoreCard_Frame2_Spare))
+                        .addGap(45, 45, 45)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame3_Strike)
+                            .addComponent(btn_ScoreCard_Frame3_Spare))
+                        .addGap(47, 47, 47)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame4_Spare)
+                            .addComponent(btn_ScoreCard_Frame4_Strike))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame5_Strike)
+                            .addComponent(btn_ScoreCard_Frame5_Spare))
+                        .addGap(45, 45, 45)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame6_Strike)
+                            .addComponent(btn_ScoreCard_Frame6_Spare))
+                        .addGap(47, 47, 47)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame7_Strike)
+                            .addComponent(btn_ScoreCard_Frame7_Spare))
+                        .addGap(45, 45, 45)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame8_Strike)
+                            .addComponent(btn_ScoreCard_Frame8_Spare16))
+                        .addGap(45, 45, 45)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame9_Strike)
+                            .addComponent(btn_ScoreCard_Frame9_Spare8))
+                        .addGap(66, 66, 66)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_ScoreCard_Frame10_Strike)
+                            .addComponent(btn_ScoreCard_Frame10_Spare))
+                        .addGap(10, 10, 10)))
+                .addGap(85, 85, 85))
+        );
+        pnl_ScoreCardLayout.setVerticalGroup(
+            pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_ScoreCardLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_frame1)
+                    .addComponent(lbl_frame2)
+                    .addComponent(lbl_Frame3)
+                    .addComponent(lbl_frame4)
+                    .addComponent(lbl_frame5)
+                    .addComponent(lbl_frame6)
+                    .addComponent(lbl_frame7)
+                    .addComponent(lbl_frame8)
+                    .addComponent(lbl_frame9)
+                    .addComponent(lbl_frame10))
+                .addGap(29, 29, 29)
+                .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnl_frame3_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_frame2_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_frame4_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_frame5_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_frame9_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_frame10_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(txt_hdcScorecard))
+                    .addComponent(pnl_frame6_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                    .addComponent(pnl_frame7_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_frame8_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_frame1_Scorecard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_ScoreCard_Frame2_Strike)
+                            .addComponent(btn_ScoreCard_Frame1_Strike))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnl_ScoreCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_ScoreCard_Frame2_Spare)
+                            .addComponent(btn_ScoreCard_Frame1_Spare)))
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame3_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame3_Spare))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame5_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame5_Spare))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame6_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame6_Spare))
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame7_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame7_Spare))
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame8_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame8_Spare16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame9_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame9_Spare8))
+                    .addGroup(pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame10_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame10_Spare))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_ScoreCardLayout.createSequentialGroup()
+                        .addComponent(btn_ScoreCard_Frame4_Strike)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_ScoreCard_Frame4_Spare)))
+                .addGap(33, 33, 33))
+        );
+
+        menu_main_File.setText("File");
+        menu_main_File.setToolTipText("File");
+        menu_main_File.add(jSeparator1);
+
+        menu_Exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        menu_Exit.setText("Exit");
+        menu_Exit.setToolTipText("Exit System");
+        menu_Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_ExitActionPerformed(evt);
+            }
+        });
+        menu_main_File.add(menu_Exit);
+
+        menu_Main.add(menu_main_File);
+
+        menu_main_Player.setText("Player");
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem3.setText("Main Menu");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menu_main_Player.add(jMenuItem3);
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setText("Scores");
+        menu_main_Player.add(jMenuItem4);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5.setText("Display Scores");
+        menu_main_Player.add(jMenuItem5);
+
+        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem8.setText("Logout");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        menu_main_Player.add(jMenuItem8);
+
+        menu_Main.add(menu_main_Player);
+
+        menu_main_Help.setText("Help");
+
+        menu_About.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        menu_About.setText("About");
+        menu_About.setToolTipText("About");
+        menu_About.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_AboutActionPerformed(evt);
+            }
+        });
+        menu_main_Help.add(menu_About);
+
+        menu_Main.add(menu_main_Help);
+
+        setJMenuBar(menu_Main);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnl_ScoreCard, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(633, 633, 633)
+                    .addComponent(lbl_playerName_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(696, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnl_ScoreCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(351, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(293, 293, 293)
+                    .addComponent(lbl_playerName_Scorecard, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(293, Short.MAX_VALUE)))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+
+
+
+
+    private void txt_frame1_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame1_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame1_ball1_Scorecard.getText().equals("X") || txt_frame1_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame1_ball2_Scorecard.setEnabled(true);
+            txt_frame1_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame1_ball1_Scorecard.setText("X");
+            txt_frame2_ball1_Scorecard.setEnabled(true);
+            txt_frame2_ball1_Scorecard.requestFocus();
+        }
+        txt_frame1_ball1_Scorecard.setEditable(false);
+    }//GEN-LAST:event_txt_frame1_ball1_ScorecardActionPerformed
+
+    private void txt_frame1_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame1_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame1_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame1_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame1_ball2_Scorecard.getText()) == 10)){
+            txt_frame1_ball2_Scorecard.setText("/");
+        }
+        txt_frame1_ball2_Scorecard.setEditable(false);
+        txt_frame2_ball1_Scorecard.setEnabled(true);
+        txt_frame2_ball1_Scorecard.setEditable(true);
+        txt_frame2_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame1_Scorecard, pnl_frame2_Scorecard, pnl_frame3_Scorecard);//frame1 score
+    }//GEN-LAST:event_txt_frame1_ball2_ScorecardActionPerformed
+
+    private void txt_frame2_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame2_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame2_ball1_Scorecard.getText().equals("X") || txt_frame2_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame2_ball2_Scorecard.setEnabled(true);
+            txt_frame2_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame2_ball1_Scorecard.setText("X");
+            txt_frame3_ball1_Scorecard.setEnabled(true);
+            txt_frame3_ball1_Scorecard.requestFocus();
+        }
+        txt_frame2_ball1_Scorecard.setEditable(false);
+        calcScoreForFrame(pnl_frame1_Scorecard, pnl_frame2_Scorecard, pnl_frame3_Scorecard);
+    }//GEN-LAST:event_txt_frame2_ball1_ScorecardActionPerformed
+
+    private void txt_frame2_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame2_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame2_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame2_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame2_ball2_Scorecard.getText()) == 10)){
+            txt_frame2_ball2_Scorecard.setText("/");
+        }
+        txt_frame2_ball2_Scorecard.setEditable(false);
+        txt_frame3_ball1_Scorecard.setEnabled(true);
+        txt_frame3_ball1_Scorecard.setEditable(true);
+        txt_frame3_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame1_Scorecard, pnl_frame2_Scorecard, pnl_frame3_Scorecard);//frame1 score
+        calcScoreForFrame(pnl_frame2_Scorecard, pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame1_Scorecard);//frame2 score
+    }//GEN-LAST:event_txt_frame2_ball2_ScorecardActionPerformed
+
+    private void txt_frame3_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame3_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame3_ball1_Scorecard.getText().equals("X") || txt_frame3_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame3_ball2_Scorecard.setEnabled(true);
+            txt_frame3_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame3_ball1_Scorecard.setText("X");
+            txt_frame4_ball1_Scorecard.setEnabled(true);
+            txt_frame4_ball1_Scorecard.requestFocus();
+        }
+        txt_frame3_ball1_Scorecard.setEditable(false);
+        calcScoreForFrame(pnl_frame1_Scorecard, pnl_frame2_Scorecard, pnl_frame3_Scorecard);//frame1 score
+        calcScoreForFrame(pnl_frame2_Scorecard, pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame1_Scorecard);//frame2 score
+    }//GEN-LAST:event_txt_frame3_ball1_ScorecardActionPerformed
+
+    private void txt_frame3_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame3_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame3_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame3_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame3_ball2_Scorecard.getText()) == 10)){
+            txt_frame3_ball2_Scorecard.setText("/");
+        }
+        txt_frame3_ball2_Scorecard.setEditable(false);
+        txt_frame4_ball1_Scorecard.setEnabled(true);
+        txt_frame4_ball1_Scorecard.setEditable(true);
+        txt_frame4_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame2_Scorecard, pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame1_Scorecard);//frame2 score
+        calcScoreForFrame(pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame2_Scorecard);//frame3 score
+    }//GEN-LAST:event_txt_frame3_ball2_ScorecardActionPerformed
+
+    private void txt_frame5_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame5_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame5_ball1_Scorecard.getText().equals("X") || txt_frame5_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame5_ball2_Scorecard.setEnabled(true);
+            txt_frame5_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame5_ball1_Scorecard.setText("X");
+            txt_frame6_ball1_Scorecard.setEnabled(true);
+            txt_frame6_ball1_Scorecard.requestFocus();
+        }
+        txt_frame5_ball1_Scorecard.setEditable(false);
+        calcScoreForFrame(pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame2_Scorecard);//frame3 score
+        calcScoreForFrame(pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame3_Scorecard);//frame4 score
+    }//GEN-LAST:event_txt_frame5_ball1_ScorecardActionPerformed
+
+    private void txt_frame5_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame5_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame5_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame5_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame5_ball2_Scorecard.getText()) == 10)){
+            txt_frame5_ball2_Scorecard.setText("/");
+        }
+        txt_frame5_ball2_Scorecard.setEditable(false);
+        txt_frame6_ball1_Scorecard.setEnabled(true);
+        txt_frame6_ball1_Scorecard.setEditable(true);
+        txt_frame6_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame3_Scorecard);//frame4 score
+        calcScoreForFrame(pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame4_Scorecard);//frame5 score
+    }//GEN-LAST:event_txt_frame5_ball2_ScorecardActionPerformed
+
+    private void txt_frame6_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame6_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame6_ball1_Scorecard.getText().equals("X") || txt_frame6_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame6_ball2_Scorecard.setEnabled(true);
+            txt_frame6_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame6_ball1_Scorecard.setText("X");
+            txt_frame7_ball1_Scorecard.setEnabled(true);
+            txt_frame7_ball1_Scorecard.requestFocus();
+        }
+        txt_frame6_ball1_Scorecard.setEditable(false);
+        calcScoreForFrame(pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame3_Scorecard);//frame4 score
+        calcScoreForFrame(pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame4_Scorecard);//frame5 score
+    }//GEN-LAST:event_txt_frame6_ball1_ScorecardActionPerformed
+
+    private void txt_frame6_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame6_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame6_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame6_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame6_ball2_Scorecard.getText()) == 10)){
+            txt_frame6_ball2_Scorecard.setText("/");
+        }
+        txt_frame6_ball2_Scorecard.setEditable(false);
+        txt_frame7_ball1_Scorecard.setEnabled(true);
+        txt_frame7_ball1_Scorecard.setEditable(true);
+        txt_frame7_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame4_Scorecard);//frame5 score
+        calcScoreForFrame(pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame8_Scorecard, pnl_frame5_Scorecard);//frame6 score
+    }//GEN-LAST:event_txt_frame6_ball2_ScorecardActionPerformed
+
+    private void txt_frame7_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame7_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame7_ball1_Scorecard.getText().equals("X") || txt_frame7_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame7_ball2_Scorecard.setEnabled(true);
+            txt_frame7_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame7_ball1_Scorecard.setText("X");
+            txt_frame8_ball1_Scorecard.setEnabled(true);
+            txt_frame8_ball1_Scorecard.requestFocus();
+        }
+        txt_frame7_ball1_Scorecard.setEditable(false);
+        calcScoreForFrame(pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame4_Scorecard);//frame5 score
+        calcScoreForFrame(pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame8_Scorecard, pnl_frame5_Scorecard);//frame6 score
+    }//GEN-LAST:event_txt_frame7_ball1_ScorecardActionPerformed
+
+    private void txt_frame7_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame7_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame7_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame7_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame7_ball2_Scorecard.getText()) == 10)){
+            txt_frame7_ball2_Scorecard.setText("/");
+        }
+        txt_frame7_ball2_Scorecard.setEditable(false);
+        txt_frame8_ball1_Scorecard.setEnabled(true);
+        txt_frame8_ball1_Scorecard.setEditable(true);
+        txt_frame8_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame8_Scorecard, pnl_frame5_Scorecard);//frame6 score
+        calcScoreForFrame(pnl_frame7_Scorecard, pnl_frame8_Scorecard, pnl_frame9_Scorecard, pnl_frame6_Scorecard);//frame7 score
+    }//GEN-LAST:event_txt_frame7_ball2_ScorecardActionPerformed
+
+    private void txt_frame8_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame8_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame8_ball1_Scorecard.getText().equals("X") || txt_frame8_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame8_ball2_Scorecard.setEnabled(true);
+            txt_frame8_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame8_ball1_Scorecard.setText("X");
+            txt_frame9_ball1_Scorecard.setEnabled(true);
+            txt_frame9_ball1_Scorecard.requestFocus();
+        }
+        txt_frame8_ball1_Scorecard.setEditable(false);
+        calcScoreForFrame(pnl_frame6_Scorecard, pnl_frame7_Scorecard, pnl_frame8_Scorecard, pnl_frame5_Scorecard);//frame6 score
+        calcScoreForFrame(pnl_frame7_Scorecard, pnl_frame8_Scorecard, pnl_frame9_Scorecard, pnl_frame6_Scorecard);//frame7 score
+    }//GEN-LAST:event_txt_frame8_ball1_ScorecardActionPerformed
+
+    private void txt_frame8_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame8_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame8_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame8_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame8_ball2_Scorecard.getText()) == 10)){
+            txt_frame8_ball2_Scorecard.setText("/");
+        }
+        txt_frame8_ball2_Scorecard.setEditable(false);
+        txt_frame9_ball1_Scorecard.setEnabled(true);
+        txt_frame9_ball1_Scorecard.setEditable(true);
+        txt_frame9_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame7_Scorecard, pnl_frame8_Scorecard, pnl_frame9_Scorecard, pnl_frame6_Scorecard);//frame7 score
+        calcScoreForFrame(pnl_frame8_Scorecard, pnl_frame9_Scorecard, pnl_frame10_Scorecard, pnl_frame7_Scorecard);//frame8 score
+    }//GEN-LAST:event_txt_frame8_ball2_ScorecardActionPerformed
+
+
+
+    /**
+     * This method exits the program when the Exit Menu Item (shortcut: Ctrl+E)
+     * is clicked.
+     * @param evt
+     */
+    private void menu_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ExitActionPerformed
+        // Exit Program
+        System.exit(0);
+    }//GEN-LAST:event_menu_ExitActionPerformed
+
+    /**
+     * This method creates and displays the About Form when the About Menu Item
+     * (shortcut: Ctrl+Q) is clicked.
+     * @param evt
+     */
+    private void menu_AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_AboutActionPerformed
+        // Create and display the About form
+        new frm_About().setVisible(true);
+    }//GEN-LAST:event_menu_AboutActionPerformed
+
+    /**
+     * This method creates and displays the Main Form when the Main Menu menu
+     * item (shortcut: Ctrl+M) is clicked.
+     * @param evt
+     */
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // Create and display the Main form
+        new frm_Main(playerId).setVisible(true);
+        // This form is no longer needed so dispose of it
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    /**
+     * This method logs the user out when the Logout menu item
+     * (shortcut: Ctrl+L) is clicked.
+     * @param evt
+     */
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // Create and display the LoginPage form
+        new frm_LoginPage().setVisible(true);
+        // This form is no longer needed so dispose of it
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+
+
+    private void txt_frame9_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame9_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_frame9_ball1_ScorecardActionPerformed
+
+    private void txt_frame9_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame9_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_frame9_ball2_ScorecardActionPerformed
+
+    private void txt_frame10_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame10_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_frame10_ball1_ScorecardActionPerformed
+
+    private void txt_frame10_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame10_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_frame10_ball2_ScorecardActionPerformed
+
+    private void txt_frame10_ball3_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame10_ball3_ScorecardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_frame10_ball3_ScorecardActionPerformed
+
+    private void txt_frame4_ball1_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame4_ball1_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if (!(txt_frame4_ball1_Scorecard.getText().equals("X") || txt_frame4_ball1_Scorecard.getText().equals("10"))) {
+            txt_frame4_ball2_Scorecard.setEnabled(true);
+            txt_frame4_ball2_Scorecard.requestFocus();
+        } else {
+            txt_frame4_ball1_Scorecard.setText("X");
+            txt_frame5_ball1_Scorecard.setEnabled(true);
+            txt_frame5_ball1_Scorecard.requestFocus();
+        }
+        txt_frame4_ball1_Scorecard.setEditable(false);
+        calcScoreForFrame(pnl_frame2_Scorecard, pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame1_Scorecard);//frame2 score
+        calcScoreForFrame(pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame2_Scorecard);//frame3 score
+    }//GEN-LAST:event_txt_frame4_ball1_ScorecardActionPerformed
+
+    private void txt_frame4_ball2_ScorecardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_frame4_ball2_ScorecardActionPerformed
+        // TODO add your handling code here:
+        if ((txt_frame4_ball2_Scorecard.getText().equals("/") || Integer.parseInt(txt_frame4_ball1_Scorecard.getText()) + Integer.parseInt(txt_frame4_ball2_Scorecard.getText()) == 10)){
+            txt_frame4_ball2_Scorecard.setText("/");
+        }
+        txt_frame4_ball2_Scorecard.setEditable(false);
+        txt_frame5_ball1_Scorecard.setEnabled(true);
+        txt_frame5_ball1_Scorecard.setEditable(true);
+        txt_frame5_ball1_Scorecard.requestFocus();
+        calcScoreForFrame(pnl_frame3_Scorecard, pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame2_Scorecard);//frame3 score
+        calcScoreForFrame(pnl_frame4_Scorecard, pnl_frame5_Scorecard, pnl_frame6_Scorecard, pnl_frame3_Scorecard);//frame4 score
+    }//GEN-LAST:event_txt_frame4_ball2_ScorecardActionPerformed
+
+
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(frm_BowlingScoreCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(frm_BowlingScoreCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(frm_BowlingScoreCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(frm_BowlingScoreCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new frm_BowlingScoreCard(playerId).setVisible(true);
+
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_ScoreCard_Frame10_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame10_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame1_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame1_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame2_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame2_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame3_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame3_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame4_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame4_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame5_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame5_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame6_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame6_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame7_Spare;
+    private javax.swing.JButton btn_ScoreCard_Frame7_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame8_Spare16;
+    private javax.swing.JButton btn_ScoreCard_Frame8_Strike;
+    private javax.swing.JButton btn_ScoreCard_Frame9_Spare8;
+    private javax.swing.JButton btn_ScoreCard_Frame9_Strike;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel lbl_Frame10_Score;
+    private javax.swing.JLabel lbl_Frame1_Score;
+    private javax.swing.JLabel lbl_Frame2_Score;
+    private javax.swing.JLabel lbl_Frame3;
+    private javax.swing.JLabel lbl_Frame3_Score;
+    private javax.swing.JLabel lbl_Frame4_Score;
+    private javax.swing.JLabel lbl_Frame5_Score;
+    private javax.swing.JLabel lbl_Frame6_Score;
+    private javax.swing.JLabel lbl_Frame7_Score;
+    private javax.swing.JLabel lbl_Frame8_Score;
+    private javax.swing.JLabel lbl_Frame9_Score;
+    private javax.swing.JLabel lbl_Score;
+    private javax.swing.JLabel lbl_frame1;
+    private javax.swing.JLabel lbl_frame10;
+    private javax.swing.JLabel lbl_frame2;
+    private javax.swing.JLabel lbl_frame4;
+    private javax.swing.JLabel lbl_frame5;
+    private javax.swing.JLabel lbl_frame6;
+    private javax.swing.JLabel lbl_frame7;
+    private javax.swing.JLabel lbl_frame8;
+    private javax.swing.JLabel lbl_frame9;
+    private javax.swing.JLabel lbl_playerName_Scorecard;
+    private javax.swing.JLabel lbl_score_Scorecard;
+    private javax.swing.JLabel lbl_spares_Scorecard;
+    private javax.swing.JLabel lbl_strikes_Scorecard;
+    private javax.swing.JMenuItem menu_About;
+    private javax.swing.JMenuItem menu_Exit;
+    private javax.swing.JMenuBar menu_Main;
+    private javax.swing.JMenu menu_main_File;
+    private javax.swing.JMenu menu_main_Help;
+    private javax.swing.JMenu menu_main_Player;
+    private javax.swing.JPanel pnl_ScoreCard;
+    private javax.swing.JPanel pnl_frame10_Scorecard;
+    private javax.swing.JPanel pnl_frame1_Scorecard;
+    private javax.swing.JPanel pnl_frame2_Scorecard;
+    private javax.swing.JPanel pnl_frame3_Scorecard;
+    private javax.swing.JPanel pnl_frame4_Scorecard;
+    private javax.swing.JPanel pnl_frame5_Scorecard;
+    private javax.swing.JPanel pnl_frame6_Scorecard;
+    private javax.swing.JPanel pnl_frame7_Scorecard;
+    private javax.swing.JPanel pnl_frame8_Scorecard;
+    private javax.swing.JPanel pnl_frame9_Scorecard;
+    private javax.swing.JTextField txt_frame10_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame10_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame10_ball3_Scorecard;
+    private javax.swing.JTextField txt_frame1_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame1_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame2_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame2_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame3_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame3_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame4_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame4_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame5_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame5_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame6_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame6_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame7_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame7_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame8_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame8_ball2_Scorecard;
+    private javax.swing.JTextField txt_frame9_ball1_Scorecard;
+    private javax.swing.JTextField txt_frame9_ball2_Scorecard;
+    private javax.swing.JLabel txt_hdcScorecard;
+    // End of variables declaration//GEN-END:variables
+}
